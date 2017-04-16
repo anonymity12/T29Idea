@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_field"
+            android:icon="@drawable/ic_nature_people_black_18dp"
+            android:title="@string/my_field" />
+        <item
+            android:id="@+id/nav_add_new"
+            android:icon="@drawable/ic_edit_black_18dp"
+            android:title="@string/new_idea" />
+        <item
+            android:id="@+id/nav_trending"
+            android:icon="@drawable/ic_whatshot_black_18dp"
+            android:title="@string/today_trending" />
+        <item
+            android:id="@+id/nav_tools"
+            android:icon="@drawable/ic_settings_black_18dp"
+            android:title="@string/your_tools" />
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_live_help_black_18dp"
+            android:title="Help"/>
+    </group>
+
+
+
+</menu>

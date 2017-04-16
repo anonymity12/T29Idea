@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.paul.t29ideagarden2.atys.ToolsActivity">
+
+    <Button
+        android:id="@+id/edit_user_info"
+        android:text="@string/edit_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btn1Clicked"/>
+    <Button
+        android:id="@+id/tools_btn2"
+        android:text="看我的思想种植面积（待）"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/tools_btn3"
+        android:text="看附近的思想家（待）"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/tools_btn4"
+        android:text="经纬度向确切地点转换（待完善）"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/tools_btn5"
+        android:text="提交反馈（待完善）"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:text="here goes some search tools and about Button to help and intro"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp" />
+
+</LinearLayout>

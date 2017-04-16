@@ -1,0 +1,151 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+
+    android:layout_height="fill_parent"
+    >
+    <ImageView
+        android:id="@+id/login_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <TableLayout
+
+        android:layout_width="fill_parent"
+
+        android:layout_height="fill_parent"
+
+        android:gravity="center_vertical"
+
+        android:id="@+id/table_layout"
+        android:stretchColumns="0,4">
+
+        <TableRow>
+            <com.paul.t29ideagarden2.views.MailLineView
+                android:layout_height="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_span="3"
+                android:layout_column="1"/>
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView />
+
+            <TextView
+
+                android:text="名   字："
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:textSize="24sp"
+
+                />
+
+            <EditText
+
+                android:id="@+id/account"
+
+                android:layout_span="2"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:textSize="24sp"
+
+                android:minWidth="220px"/>
+
+            <TextView />
+
+        </TableRow>
+
+        <TableRow android:layout_marginTop="20px">
+
+            <TextView />
+
+            <TextView
+
+                android:text="密   码："
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:textSize="24sp"
+
+                />
+
+            <EditText
+
+                android:id="@+id/pwd"
+                android:layout_span="2"
+
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:minWidth="220px"
+
+                android:textSize="24sp"
+
+                android:inputType="textPassword"/>
+
+            <TextView />
+
+        </TableRow>
+        <TableRow>
+            <com.paul.t29ideagarden2.views.MailLineView
+                android:layout_height="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_span="3"
+                android:layout_column="1"/>
+
+        </TableRow>
+
+
+        <TableRow android:layout_marginTop="20px">
+
+            <TextView />
+
+            <Button
+
+                android:id="@+id/login"
+
+                android:text="登录"
+
+                android:onClick="login"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                />
+
+            <Button
+
+                android:id="@+id/quit"
+
+                android:text="退出"
+                android:onClick="logout"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/register"
+                android:text="注册"
+                android:onClick="register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView />
+
+        </TableRow>
+
+    </TableLayout>
+</RelativeLayout>
+

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.paul.t29ideagarden2.atys.NewIdeaActivity">
+<EditText
+    android:gravity="top"
+    android:id="@+id/et_text"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:hint="我们坚信写作写的是内容，所思所想，而非花样。\n 写你在哪里，听着网易云的什么歌，最近看到了什么，想到了哪个人吧！
+\n 推荐使用Markdown 语法写作，如果你不懂，就去帮助页面寻求指南。"
+    android:layout_weight="1"
+     />
+
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/location_color"
+        android:text="你的踪迹"
+        android:gravity="right"/>
+</LinearLayout>
