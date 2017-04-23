@@ -28,6 +28,7 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.paul.t29ideagarden2.atys.EditUserInfoActivity;
+import com.paul.t29ideagarden2.atys.HelpActivity;
 import com.paul.t29ideagarden2.atys.LoginActivity;
 import com.paul.t29ideagarden2.atys.MyFieldActivity;
 import com.paul.t29ideagarden2.atys.NewIdeaActivity;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity
     double latitude,longitude;
     private UiSettings mUiSettings;//定义一个UiSettings对象
     private  static AMap aMap;
-
+    private AMap.OnMapClickListener onMapClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
-        Toast.makeText(this,"开始啦",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"侦测花儿开始啦",Toast.LENGTH_SHORT).show();
         init();
     }
 
@@ -126,6 +127,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
         mMapView.onResume();
+        findNear();
     }
     @Override
     protected void onPause() {
@@ -172,31 +174,7 @@ public class MainActivity extends AppCompatActivity
             Log.d("Start Searching", ">>>>>>>>>>>>>>>>>enter search");
             toast("正在找你附近的思想");
             //// TODO: 4/12/17  search for surrounding ideas
-            BmobQuery<Idea> bmobQuery = new BmobQuery<>();
-            bmobQuery.addWhereNear("gps", new BmobGeoPoint(longitude,latitude));
-            bmobQuery.setLimit(20);
-            Log.d("Almost Searching", ">>>>>>>>>>>>>>>>>ready for search");
-            bmobQuery.findObjects(new FindListener<Idea>() {
-                @Override
-                public void done(List<Idea> list, BmobException e) {
-                    if (e == null){
-                        double tempLatitude, tempLongitude;
-                        LatLng latLng;
-                        AMap aMap = mMapView.getMap();
-                        Idea tempIdea;
-                        for(int i = 0; i<list.size();i++){
-                            tempIdea = list.get(i);
-                            Log.d("aaaaaa",">>>>>>>>>>>>>>>each tempIdea Id is:"+tempIdea.getObjectId());
-                            tempLatitude = list.get(i).getGps().getLatitude();
-                            tempLongitude = list.get(i).getGps().getLongitude();
-                            latLng = new LatLng(tempLatitude,tempLongitude);
-                            aMap.addMarker(new MarkerOptions().position(latLng).title(list.get(i).getTitle()).snippet(list.get(i).getObjectId()));
-                        }
-                        toast("找到了一些附近人种的"+list.size()+"个思想花，点一下地图上的标记看看吧");
-                        aMap.setOnInfoWindowClickListener(listener);
-                    }
-                }
-            });
+            findNear();
 
 
         }
@@ -228,6 +206,9 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(this, ToolsActivity.class);
             startActivity(intent);
 
+        }else if (id == R.id.nav_help){
+            intent = new Intent(this, HelpActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -326,4 +307,37 @@ public class MainActivity extends AppCompatActivity
 
         }
     };
+
+    public void findNear(){
+        BmobQuery<Idea> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereNear("gps", new BmobGeoPoint(longitude,latitude));
+        bmobQuery.setLimit(20);
+        Log.d("Almost Searching", ">>>>>>>>>>>>>>>>>ready for search");
+        bmobQuery.findObjects(new FindListener<Idea>() {
+            @Override
+            public void done(List<Idea> list, BmobException e) {
+                if (e == null){
+                    double tempLatitude, tempLongitude;
+                    LatLng latLng;
+                    AMap aMap = mMapView.getMap();
+                    Idea tempIdea;
+                    for(int i = 0; i<list.size();i++){
+                        tempIdea = list.get(i);
+                        Log.d("aaaaaa",">>>>>>>>>>>>>>>each tempIdea Id is:"+tempIdea.getObjectId());
+                        tempLatitude = list.get(i).getGps().getLatitude();
+                        tempLongitude = list.get(i).getGps().getLongitude();
+                        latLng = new LatLng(tempLatitude,tempLongitude);
+                        aMap.addMarker(new MarkerOptions().position(latLng).title(list.get(i).getTitle()).snippet(list.get(i).getObjectId()));
+                    }
+                    if (list.size() == 0){
+                        toast("没找到呢，你附近没人投放花朵，或者再用放大镜侦查吧");
+                    }else {
+                        toast("找到了一些附近人种的"+list.size()+"个思想花，用右下角+-缩放地图看看吧");
+                    }
+                    aMap.setOnInfoWindowClickListener(listener);
+                }
+            }
+        });
+    }
+
 }

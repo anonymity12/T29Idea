@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -59,6 +60,9 @@ public class LoginActivity extends Activity {
     }
 
     public void register(View view) {
+        if (TextUtils.isEmpty(account.getText())){
+            toast("请输入名字和密码进行注册");
+        }
         final User myUser = new User();
         myUser.setUsername(account.getText().toString());
         myUser.setPassword(pwd.getText().toString());
@@ -66,8 +70,9 @@ public class LoginActivity extends Activity {
             @Override
             public void done(User s, BmobException e) {
                 if(e==null){
-                    toast("注册成功:" +s.toString());
+                    toast("注册成功，请点击登录 " +s.toString());
                 }else{
+                    toast("失败了，请检查你的网络和应用权限");
                     loge(e);
                 }
             }
@@ -87,7 +92,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onError(Throwable throwable) {
                 Log.d(TAG,"----onError----");
-                toast("登录失败,请检查网络");
+                toast("登录失败,请检查网络和密码");
             }
 
             @Override

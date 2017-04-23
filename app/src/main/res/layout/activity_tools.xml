@@ -15,29 +15,31 @@
         android:onClick="btn1Clicked"/>
     <Button
         android:id="@+id/tools_btn2"
-        android:text="看我的思想种植面积（待）"
+        android:text="空中滑翔"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="btn2Clicked"/>
     <Button
         android:id="@+id/tools_btn3"
-        android:text="看附近的思想家（待）"
+        android:text="上帝之眼"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="btn3Clicked"/>
     <Button
         android:id="@+id/tools_btn4"
-        android:text="经纬度向确切地点转换（待完善）"
+        android:text="城市级思想热力图（待完善）"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/tools_btn5"
-        android:text="提交反馈（待完善）"
+        android:text="提交反馈（qq:3060326200）"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
         android:layout_width="368dp"
         android:layout_height="495dp"
-        android:text="here goes some search tools and about Button to help and intro"
+        android:text="传播我们年轻而伟大的想法。和你周围的同学一起在现在种下你们最真切的思想的花朵吧。你能写下不成熟而勇敢的想法，让身边的别人发现。种下一朵思想的花，让它和我们一起在日积月累中成熟。相信我们能够互相教育，一起建造我们希望的良好的环境。"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp" />
 

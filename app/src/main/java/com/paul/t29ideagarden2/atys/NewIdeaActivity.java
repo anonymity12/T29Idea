@@ -33,7 +33,7 @@ public class NewIdeaActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.et_text);
         latitude = getIntent().getExtras().getDouble("latitude",39.8965);
         longitude = getIntent().getExtras().getDouble("longitude",116.4074);
-        tv_location.setText(user.getUsername()+"@"+latitude+","+longitude);
+        tv_location.setText(user.getUsername()+"@"+latitude+","+longitude);//// TODO: 4/20/17 逆地理编码
 
     }
 
@@ -47,25 +47,29 @@ public class NewIdeaActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.finish_idea){
             String originalString = editText.getText().toString();
-            String title = originalString.substring(0,14);
-
-            Idea idea = new Idea();
-            idea.setContent(originalString);
-            idea.setTitle(title);
-            idea.setAuthor(user);
-            Log.d("NewIdeaActivity",">>>>>>>User Id is:  "+user.getObjectId());
-            idea.setGps(new BmobGeoPoint(longitude,latitude));
-            idea.save(new SaveListener<String>() {
-                @Override
-                public void done(String s, BmobException e) {
-                    if (e == null){
-                        toast("成功种下一个思想在"+"\n"+longitude+"\n"+latitude);
-                        finish();
-                    }else{
-                        toast("失败了，错误代码是："+e);
+            if (originalString.length()<40){
+                toast("你输入的字数太少");
+            }else {
+                String title = originalString.substring(0, 14);
+                Idea idea = new Idea();
+                idea.setContent(originalString);
+                idea.setTitle(title);
+                idea.setAuthor(user);
+                Log.d("NewIdeaActivity", ">>>>>>>User Id is:  " + user.getObjectId());
+                idea.setGps(new BmobGeoPoint(longitude, latitude));
+                idea.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e == null) {
+                            toast("成功种下一个思想在" + "\n" + longitude + "\n" + latitude);
+                            finish();
+                        } else {
+                            toast("失败了，错误代码是：" + e);
+                        }
                     }
-                }
-            });
+                });
+
+            }
         }
         return super.onOptionsItemSelected(item);
     }

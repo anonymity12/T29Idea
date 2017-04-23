@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.paul.t29ideagarden2.R;
 import com.paul.t29ideagarden2.bean.Idea;
+import com.paul.t29ideagarden2.bean.User;
 import com.zzhoujay.richtext.RichText;
 
 import cn.bmob.v3.Bmob;
@@ -26,6 +27,8 @@ public class SeeIdeaActivity extends AppCompatActivity {
     private String ideaObjectId,content,title,ideaOwner="owner",location="location",ideaTime="2017-4-15";
     private Integer shared,hated;
 
+    private User ownerUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,7 @@ public class SeeIdeaActivity extends AppCompatActivity {
         RichText.initCacheDir(this);
 
         BmobQuery<Idea> query = new BmobQuery<>();
+        query.include("author");
         query.getObject(ideaObjectId, new QueryListener<Idea>() {
             @Override
             public void done(Idea idea, BmobException e) {
@@ -45,16 +49,27 @@ public class SeeIdeaActivity extends AppCompatActivity {
                     Log.d("SeeIdeaActivity","the content is: "+content);
                     title = idea.getTitle();
                     shared = idea.getShared();
-                    ideaOwner = idea.getAuthor().getUsername();
-                    Log.d("SeeIdeaActivity","the ideaOwner is: "+ideaOwner);
+                    ownerUser = idea.getAuthor();
+                    Log.d("SeeIdeaActivity","the ideaOwner is: "+ownerUser);
+                    ideaOwner = ownerUser.getObjectId();
+                    Log.d("SeeIdeaActivity","the ideaOwnerId is: "+ideaOwner);
                     shared = idea.getShared();
 
                     location = idea.getGps().getLatitude()+","+idea.getGps().getLongitude();
                     ideaTime = idea.getCreatedAt();
 
-                    ideaDetails.setText(ideaOwner + "@" + location + "(" + ideaTime + ")");
-                    String sharedCountString = "+"+shared;
-                    ideaShared.setText(sharedCountString);
+                    ideaDetails.setText("@" + location + "(" + ideaTime + ")");
+                    final String sharedCountString = "+"+shared;
+                    BmobQuery<User> userBmobQuery =new BmobQuery<User>();
+                    userBmobQuery.getObject(ideaOwner, new QueryListener<User>() {
+                        @Override
+                        public void done(User user, BmobException e) {
+                            String countAndUser = user.getUsername();
+                            countAndUser+=" "+sharedCountString;
+                            ideaShared.setText(countAndUser);
+                        }
+                    });
+
                     setTitle(title);
                     RichText.fromMarkdown(content).into(textView);
                     Log.d("SeeIdeaActivity",">>>>>>>>>>>>idea Shared is : "+idea.getShared());

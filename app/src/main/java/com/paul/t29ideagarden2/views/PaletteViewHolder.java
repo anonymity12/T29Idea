@@ -7,20 +7,21 @@ import android.widget.TextView;
 
 import com.paul.t29ideagarden2.R;
 
+
 /**
  * Created by paul on 3/28/17.
  */
 
 public class PaletteViewHolder extends RecyclerView.ViewHolder {
 
-    protected TextView titleText;
-    protected TextView contentText;
-    protected CardView card;
+    public TextView ideaContent;
+    public TextView ideaDetails;
+    public CardView card;
 
     public PaletteViewHolder(View itemView) {
         super(itemView);
-        titleText = (TextView) itemView.findViewById(R.id.name);
-        contentText = (TextView) itemView.findViewById(R.id.hexValue);
+        ideaContent = (TextView) itemView.findViewById(R.id.name);
+        ideaDetails = (TextView) itemView.findViewById(R.id.hexValue);
         card = (CardView) itemView;
     }
 }

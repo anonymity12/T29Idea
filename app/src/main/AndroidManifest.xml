@@ -14,7 +14,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
         android:label="@string/app_name"
@@ -23,6 +25,7 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="86d69d37f03f9cb2fd7d5c180717f394" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -33,6 +36,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service android:name="com.amap.api.location.APSService" />
 
         <activity android:name=".atys.MyFieldActivity" />
@@ -46,10 +50,11 @@
         <activity android:name=".atys.EditUserInfoActivity" />
         <activity
             android:name=".atys.LoginActivity"
-            android:label="Login/SignUp/Quit"
-            />
-        <activity android:name=".atys.SeeIdeaActivity"
-            android:label="这是一个思想花"/>
+            android:label="Login/SignUp/Quit" />
+        <activity
+            android:name=".atys.SeeIdeaActivity"
+            android:label="这是一个思想花" />
+        <activity android:name=".atys.HelpActivity"></activity>
     </application>
 
 </manifest>
