@@ -13,7 +13,9 @@
 
 定位SDK能得到用户坐标，App通过坐标找到20个附近的“花朵”（故事），点击花朵图标，可看到具体故事，可以进行“点赞”动作（也可以到后期添加：移植这个花朵到自己花园 的动作）
 
-![](http://img.blog.csdn.net/20170418184042323?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcGF1bGtnMTI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+<img src="http://img.blog.csdn.net/20170418184042323?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcGF1bGtnMTI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" width = "150" height = "90" alt="图片名称" align=center />
+
+
 
 用户将会积累种花和移植别人的花朵，拿到自己的花园世界
 
@@ -23,9 +25,12 @@
 
 在侧面的菜单里，单击安卓机器人头像，可以看到我的更多计划。
 
-![打开详情页面](http://img.blog.csdn.net/20171020225033592?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcGF1bGtnMTI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+<img src="http://img.blog.csdn.net/20171020225033592?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcGF1bGtnMTI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" width = "150" height = "90" alt="图片名称" align=center />
 
-![待完善的页面](http://img.blog.csdn.net/20171020225105733?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcGF1bGtnMTI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+<img src="http://img.blog.csdn.net/20171020225105733?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcGF1bGtnMTI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" width = "150" height = "90" alt="图片名称" align=center />
+
+
+
 
 # 热情所在，编码不断
 
