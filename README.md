@@ -21,10 +21,10 @@
 
 在侧面的菜单里，单击安卓机器人头像，可以看到我的更多计划。
 
-![](http://wx2.sinaimg.cn/mw690/005JrW9Kgy1fkp2xvpibnj30qo1bewm7.jpg)
+![打开详情页面](http://img.blog.csdn.net/20171020225033592?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcGF1bGtnMTI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
-![](http://wx2.sinaimg.cn/mw690/005JrW9Kgy1fkp2xtwumdj30qo1bedix.jpg)
- 
+![待完善的页面](http://img.blog.csdn.net/20171020225105733?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcGF1bGtnMTI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
 # 热情所在，编码不断
 
 # T29Idea
