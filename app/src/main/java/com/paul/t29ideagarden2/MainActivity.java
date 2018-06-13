@@ -1,10 +1,15 @@
 package com.paul.t29ideagarden2;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -38,6 +43,7 @@ import com.paul.t29ideagarden2.atys.TrendingActivity;
 import com.paul.t29ideagarden2.bean.Idea;
 import com.paul.t29ideagarden2.bean.User;
 import com.paul.t29ideagarden2.helper.PermissionManager;
+import com.paul.t29ideagarden2.util.PermissionUtil;
 
 import java.util.List;
 
@@ -47,6 +53,8 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+
+import static com.paul.t29ideagarden2.util.Constants.permissions;
 
 
 public class MainActivity extends AppCompatActivity
@@ -77,6 +85,13 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int i = ContextCompat.checkSelfPermission(this,permissions[0]);
+            if (i != PackageManager.PERMISSION_GRANTED) {
+                PermissionUtil.showDialogTipUserRequestPermission(this);
+            }
+        }
+
 
 
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
@@ -100,6 +115,7 @@ public class MainActivity extends AppCompatActivity
             View hView =  navigationView.getHeaderView(0);
             TextView nav_user = (TextView)hView.findViewById(R.id.user_name);
             nav_user.setText(user.getUsername());
+            // TODO: 2018/6/12 可以考虑在此时加载用户的头像信息。
             // 设置定位监听
             aMap.setLocationSource(this);
             aMap.setMyLocationEnabled(true);
@@ -111,6 +127,7 @@ public class MainActivity extends AppCompatActivity
             startActivityForResult(intent,1);
 
         }
+        Log.i(TAG, "init: ");
     }
 
     @Override
@@ -142,6 +159,7 @@ public class MainActivity extends AppCompatActivity
         mMapView.onSaveInstanceState(outState);
     }
 
+    //tt: deal with 返回按钮事件，保证首先关闭抽屉
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -173,10 +191,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_search) {
             Log.d("Start Searching", ">>>>>>>>>>>>>>>>>enter search");
             toast("正在找你附近的思想");
-            //// TODO: 4/12/17  search for surrounding ideas
             findNear();
-
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -198,14 +213,11 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("longitude",longitude);
             startActivity(intent);
         } else if (id == R.id.nav_trending) {
-
             intent = new Intent(this, TrendingActivity.class);
             startActivity(intent);
-
         } else if (id == R.id.nav_tools) {
             intent = new Intent(this, ToolsActivity.class);
             startActivity(intent);
-
         }else if (id == R.id.nav_help){
             intent = new Intent(this, HelpActivity.class);
             startActivity(intent);
@@ -319,11 +331,10 @@ public class MainActivity extends AppCompatActivity
                 if (e == null){
                     double tempLatitude, tempLongitude;
                     LatLng latLng;
-                    AMap aMap = mMapView.getMap();
+                    aMap = mMapView.getMap();
                     Idea tempIdea;
                     for(int i = 0; i<list.size();i++){
                         tempIdea = list.get(i);
-                        Log.d("aaaaaa",">>>>>>>>>>>>>>>each tempIdea Id is:"+tempIdea.getObjectId());
                         tempLatitude = list.get(i).getGps().getLatitude();
                         tempLongitude = list.get(i).getGps().getLongitude();
                         latLng = new LatLng(tempLatitude,tempLongitude);
@@ -339,5 +350,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
+    //tt: 获取权限的一些代码
+// TODO: 2018/6/13 onRequestPermissionsResult 
 
 }
