@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v4.app.ActivityCompat;
 
+import static com.paul.t29ideagarden2.util.Constants.PERMISSION_REQUEST_CODE;
 import static com.paul.t29ideagarden2.util.Constants.permissions;
 
 /**
@@ -22,7 +23,7 @@ public class PermissionUtil {
                 .setPositiveButton("去开启", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ActivityCompat.requestPermissions(activityContext, permissions, 321);
+                        ActivityCompat.requestPermissions(activityContext, permissions, PERMISSION_REQUEST_CODE);
                     }
                 })
                 .setNegativeButton("不开启,退出应用", new DialogInterface.OnClickListener() {
