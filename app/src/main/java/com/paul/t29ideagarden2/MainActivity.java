@@ -2,9 +2,14 @@ package com.paul.t29ideagarden2;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +26,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,8 +52,10 @@ import com.paul.t29ideagarden2.atys.ToolsActivity;
 import com.paul.t29ideagarden2.atys.TrendingActivity;
 import com.paul.t29ideagarden2.bean.Idea;
 import com.paul.t29ideagarden2.bean.User;
+import com.paul.t29ideagarden2.util.Constants;
 import com.paul.t29ideagarden2.util.PermissionUtil;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import cn.bmob.v3.Bmob;
@@ -57,11 +65,7 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
-import static com.paul.t29ideagarden2.util.Constants.ACTIVITY_REQUEST_FOR_REGISTER_USER;
-import static com.paul.t29ideagarden2.util.Constants.ACTIVITY_REQUEST_FOR_SETTING_CODE;
-import static com.paul.t29ideagarden2.util.Constants.PERMISSION_REQUEST_CODE;
-import static com.paul.t29ideagarden2.util.Constants.permissions;
-
+import static com.paul.t29ideagarden2.util.Constants.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LocationSource, AMapLocationListener {
@@ -89,6 +93,7 @@ public class MainActivity extends AppCompatActivity
     };
     private UiSettings mUiSettings;//定义一个UiSettings对象
     private AMap.OnMapClickListener onMapClickListener;
+    private ImageButton userImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +139,17 @@ public class MainActivity extends AppCompatActivity
             View hView = navigationView.getHeaderView(0);
             TextView nav_user = (TextView) hView.findViewById(R.id.user_name);
             nav_user.setText(user.getUsername());
-            // TODO: 2018/6/12 可以考虑在此时加载用户的头像信息。
+            userImage = hView.findViewById(R.id.user_image);
+            setUserImage();
+            userImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentForImg = new Intent();
+                    intentForImg.setType("image/*");
+                    intentForImg.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(intentForImg,ACTIVITY_REQUEST_FOR_CHANGE_USER_IMG);
+                }
+            });
             // 设置定位监听
             aMap.setLocationSource(this);
             aMap.setMyLocationEnabled(true);
@@ -327,10 +342,31 @@ public class MainActivity extends AppCompatActivity
                 }
 
             }
+        }else if(requestCode == ACTIVITY_REQUEST_FOR_CHANGE_USER_IMG){
+            if (resultCode == RESULT_OK){
+                Uri uri = data.getData();
+                String img_path = uri.toString();
+                SharedPreferences sp = getSharedPreferences("my_shared_preference", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("user_image",img_path);
+                editor.commit();//tt: recommend to use editor.apply() who work background.
+                setUserImage();
+            }
         }
 
     }
-
+    private void setUserImage(){
+        SharedPreferences sp = getSharedPreferences("my_shared_preference",Context.MODE_PRIVATE);
+        String img_path = sp.getString("user_image",null);
+        if (img_path != null){
+            Uri uri = Uri.parse(img_path);
+            try{
+                userImage.setImageURI(uri);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
     public void editUserInfo(View view) {
         /*获取当前用户*/
         BmobUser user = User.getCurrentUser();
