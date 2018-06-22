@@ -140,7 +140,6 @@ public class MainActivity extends AppCompatActivity
             TextView nav_user = (TextView) hView.findViewById(R.id.user_name);
             nav_user.setText(user.getUsername());
             userImage = hView.findViewById(R.id.user_image);
-            setUserImage();
             userImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -179,6 +178,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
         mMapView.onResume();
+        setUserImage();
         findNear();
     }
 
