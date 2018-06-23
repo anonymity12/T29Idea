@@ -2,9 +2,11 @@ package com.paul.t29ideagarden2.atys;
 
 import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -14,6 +16,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.paul.t29ideagarden2.R;
+import com.paul.t29ideagarden2.bean.FlowerCard;
+import com.paul.t29ideagarden2.bean.Monk;
+import com.paul.t29ideagarden2.view.IMonkMeditationView;
 
 /**
  * Created by paul on 2018/6/22
@@ -21,20 +26,28 @@ import com.paul.t29ideagarden2.R;
  * Desc:
  */
 
-public class MeditationActivity extends AppCompatActivity {
+public class MeditationActivity extends AppCompatActivity implements IMonkMeditationView{
     private RecyclerView mRecyclerView;
     private List<String> mDatas;
     private HomeAdapter mAdapter;
+    private Monk mMonk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meditation);
+        
+        mMonk = getMonk();
 
         initData();
+        initViews();
+
+
+    }
+    void initViews(){
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,3));
         mRecyclerView.setAdapter(mAdapter = new HomeAdapter());
 
     }
@@ -42,10 +55,23 @@ public class MeditationActivity extends AppCompatActivity {
     protected void initData()
     {
         mDatas = new ArrayList<String>();
-        for (int i = 'A'; i < 'z'; i++)
-        {
-            mDatas.add("" + (char) i);
-        }
+        mDatas.addAll(Arrays.asList(FlowerCard.recyclerViewStrings));
+    }
+
+    @Override
+    public Monk getMonk() {
+        // TODO: 2018/6/23 get user info
+        return null;
+    }
+
+    @Override
+    public void beginMeditation() {
+
+    }
+
+    @Override
+    public void finishMeditation() {
+
     }
 
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
