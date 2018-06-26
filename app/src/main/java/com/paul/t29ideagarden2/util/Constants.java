@@ -16,4 +16,9 @@ public class Constants {
     public static final int ACTIVITY_REQUEST_FOR_CHANGE_USER_IMG = 324;
 
     public static String img_path = "";
+    public static final String CREATE_MONK_TABLE = "create table Monk("
+            + "monk_name text,"
+            + "monk_img_path text,"
+            + "monk_level integer,"
+            + "monk_dan_count integer)";
 }

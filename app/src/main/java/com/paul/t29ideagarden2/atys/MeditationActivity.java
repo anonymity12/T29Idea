@@ -1,5 +1,7 @@
 package com.paul.t29ideagarden2.atys;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import com.paul.t29ideagarden2.R;
 import com.paul.t29ideagarden2.bean.FlowerCard;
 import com.paul.t29ideagarden2.bean.Monk;
+import com.paul.t29ideagarden2.helper.MonkDatabaseHelper;
 import com.paul.t29ideagarden2.view.IMonkMeditationView;
 
 /**
@@ -31,6 +34,7 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
     private List<String> mDatas;
     private HomeAdapter mAdapter;
     private Monk mMonk;
+    private MonkDatabaseHelper monkDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,13 +58,27 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
 
     protected void initData()
     {
+        monkDatabaseHelper = new MonkDatabaseHelper(this,"MonkRecord.db",null,1);
         mDatas = new ArrayList<String>();
         mDatas.addAll(Arrays.asList(FlowerCard.recyclerViewStrings));
     }
 
     @Override
     public Monk getMonk() {
-        // TODO: 2018/6/23 get user info
+        Monk monk = new Monk();
+        SQLiteDatabase db = monkDatabaseHelper.getWritableDatabase();
+        Cursor cursor = db.query("Monk",null,null,null,null,null,null);
+        if (cursor.moveToFirst()){
+            String name = cursor.getString(cursor.getColumnIndex("monk_name"));
+            String monk_img_path = cursor.getString(cursor.getColumnIndex("monk_img_path"));
+            int level = cursor.getInt(cursor.getColumnIndex("monk_level"));
+            int danCount = cursor.getInt(cursor.getColumnIndex("monk_dan_count"));
+            monk.setDanCount(danCount);
+            monk.setLevel(level);
+            monk.setImgPath(monk_img_path);
+            monk.setName(name);
+            return monk;
+        }
         return null;
     }
 
