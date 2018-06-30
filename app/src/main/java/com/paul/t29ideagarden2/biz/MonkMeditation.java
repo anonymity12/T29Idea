@@ -10,7 +10,7 @@ import com.paul.t29ideagarden2.bean.Monk;
 
 public class MonkMeditation implements IMonkMeditation {
     @Override
-    public void meditation(final Monk monk) {
+    public void meditation(final Monk monk, final OnMeditationFinishedListener listener) {
         new Thread(){
             @Override
             public void run() {
@@ -20,8 +20,13 @@ public class MonkMeditation implements IMonkMeditation {
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
+                //tt: 顺利完成meditation
                 if (monk != null){
                     monk.setDanCount(monk.getDanCount() + 1);
+                    listener.meditationFinished();
+                }else{
+                //tt: 未正常完成
+                    listener.meditationInterrupted();
                 }
             }
         }.start();

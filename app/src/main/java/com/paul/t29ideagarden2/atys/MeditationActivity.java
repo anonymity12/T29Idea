@@ -1,7 +1,9 @@
 package com.paul.t29ideagarden2.atys;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,11 +18,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.paul.t29ideagarden2.R;
 import com.paul.t29ideagarden2.bean.FlowerCard;
 import com.paul.t29ideagarden2.bean.Monk;
 import com.paul.t29ideagarden2.helper.MonkDatabaseHelper;
+import com.paul.t29ideagarden2.presenter.MeditationPresenter;
 import com.paul.t29ideagarden2.view.IMonkMeditationView;
 
 /**
@@ -31,10 +35,12 @@ import com.paul.t29ideagarden2.view.IMonkMeditationView;
 
 public class MeditationActivity extends AppCompatActivity implements IMonkMeditationView{
     private RecyclerView mRecyclerView;
+    private FloatingActionButton fab;
     private List<String> mDatas;
     private HomeAdapter mAdapter;
     private Monk mMonk;
     private MonkDatabaseHelper monkDatabaseHelper;
+    private MeditationPresenter meditationPresenter = new MeditationPresenter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,7 +48,6 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meditation);
         
-        mMonk = getMonk();
 
         initData();
         initViews();
@@ -50,9 +55,16 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
 
     }
     void initViews(){
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,1));
         mRecyclerView.setAdapter(mAdapter = new HomeAdapter());
+        fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                meditationPresenter.meditation();
+            }
+        });
 
     }
 
@@ -61,6 +73,8 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         monkDatabaseHelper = new MonkDatabaseHelper(this,"MonkRecord.db",null,1);
         mDatas = new ArrayList<String>();
         mDatas.addAll(Arrays.asList(FlowerCard.recyclerViewStrings));
+        insertDatabaseData();
+        mMonk = getMonk();
     }
 
     @Override
@@ -84,11 +98,35 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
 
     @Override
     public void beginMeditation() {
-
+        Toast.makeText(this,"开始修行",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void finishMeditation() {
+        Toast.makeText(this, "顺利完成本次修行,丹数量："+(mMonk.getDanCount()+1), Toast.LENGTH_SHORT).show();
+        SQLiteDatabase db = monkDatabaseHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("monk_dan_count",mMonk.getDanCount()+1);
+        db.update("Monk",cv,"monk_name = ?",new String[]{mMonk.getName()});
+
+    }
+
+    public void interruptMeditation(){
+        Toast.makeText(this, "未完成本次修行", Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void insertDatabaseData(){
+        SQLiteDatabase db = monkDatabaseHelper.getWritableDatabase();
+        Cursor cursor = db.query("Monk",null,null,null,null,null,null);
+        if (!cursor.moveToFirst()) {
+            ContentValues cv = new ContentValues();
+            cv.put("monk_name", "Paul");
+            cv.put("monk_img_path", "/sdcard/Picture");
+            cv.put("monk_level", 12);
+            cv.put("monk_dan_count", 34);
+            db.insert("Monk", null, cv);
+        }
 
     }
 

@@ -9,5 +9,5 @@ import com.paul.t29ideagarden2.bean.Monk;
  */
 
 public interface IMonkMeditation {
-    void meditation(Monk monk);
+    void meditation(Monk monk,OnMeditationFinishedListener listener);
 }

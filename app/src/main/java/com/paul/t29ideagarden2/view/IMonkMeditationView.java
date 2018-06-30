@@ -14,5 +14,6 @@ import com.paul.t29ideagarden2.bean.Monk;
 public interface IMonkMeditationView {
     Monk getMonk();//tt: 在启动时调用，这是获得基本的用户信息的行为。
     void beginMeditation();//tt: 表明用户开始修炼了。进行修炼进度的展示。
-    void finishMeditation();//tt: 修炼结束，清空修炼进度池，dan数量可能加一，这里的结束可能是完整的或者被打断后结束。
+    void finishMeditation();//tt: 修炼结束，清空修炼进度池，dan数量加一,数据库变动。
+    void interruptMeditation();//tt: 修行中途截止，废弃，dan数量不变，可弹toast
 }
