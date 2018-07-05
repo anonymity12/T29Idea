@@ -103,12 +103,16 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
 
     @Override
     public void finishMeditation() {
-        Toast.makeText(this, "顺利完成本次修行,丹数量："+(mMonk.getDanCount()+1), Toast.LENGTH_SHORT).show();
         SQLiteDatabase db = monkDatabaseHelper.getWritableDatabase();
+        Cursor cursor = db.query("Monk",null,null,null,null,null,null);
+        if (cursor.moveToFirst()){
+            int danCount = cursor.getInt(cursor.getColumnIndex("monk_dan_count"));
+            mMonk.setDanCount(danCount);
+        }
         ContentValues cv = new ContentValues();
         cv.put("monk_dan_count",mMonk.getDanCount()+1);
         db.update("Monk",cv,"monk_name = ?",new String[]{mMonk.getName()});
-
+        Toast.makeText(this, "顺利完成本次修行,丹数量："+(mMonk.getDanCount()+1), Toast.LENGTH_SHORT).show();
     }
 
     public void interruptMeditation(){
