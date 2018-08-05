@@ -2,6 +2,7 @@ package com.paul.t29ideagarden2.view;
 
 import com.paul.t29ideagarden2.bean.Monk;
 
+
 /**
  * Created by paul on 2018/6/23
  * last modified at 4:02 PM.
@@ -16,4 +17,5 @@ public interface IMonkMeditationView {
     void beginMeditation();//tt: 表明用户开始修炼了。进行修炼进度的展示。
     void finishMeditation();//tt: 修炼结束，清空修炼进度池，dan数量加一,数据库变动。
     void interruptMeditation();//tt: 修行中途截止，废弃，dan数量不变，可弹toast
+    android.os.Handler getHandler();
 }

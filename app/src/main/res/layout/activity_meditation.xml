@@ -12,7 +12,7 @@
         android:layout_height="16dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="32dp"
-        android:progress="75"
+        android:progress="0"
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
         app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
         app:layout_constraintStart_toStartOf="@+id/floatingActionButton"

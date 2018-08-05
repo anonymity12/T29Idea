@@ -3,6 +3,8 @@ package com.paul.t29ideagarden2.atys;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
@@ -17,9 +19,11 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.paul.t29ideagarden2.MainActivity;
 import com.paul.t29ideagarden2.R;
 import com.paul.t29ideagarden2.bean.FlowerCard;
 import com.paul.t29ideagarden2.bean.Monk;
@@ -36,11 +40,13 @@ import com.paul.t29ideagarden2.view.IMonkMeditationView;
 public class MeditationActivity extends AppCompatActivity implements IMonkMeditationView{
     private RecyclerView mRecyclerView;
     private FloatingActionButton fab;
+    private ProgressBar mProgressBar;
     private List<String> mDatas;
     private HomeAdapter mAdapter;
     private Monk mMonk;
     private MonkDatabaseHelper monkDatabaseHelper;
     private MeditationPresenter meditationPresenter = new MeditationPresenter(this);
+    static Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -58,6 +64,7 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,1));
         mRecyclerView.setAdapter(mAdapter = new HomeAdapter());
+        mProgressBar = findViewById(R.id.progressBar);
         fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +72,19 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
                 meditationPresenter.meditation();
             }
         });
-
+        handler =  new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 1:
+                        mProgressBar.setProgress((int)(100 - ((msg.arg1 / 60.0) * 100)));//tt: now we use 1 min, so 60
+                        break;
+                    default:
+                        Toast.makeText(getBaseContext(),"handle error",Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
     }
 
     protected void initData()
@@ -75,6 +94,10 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         mDatas.addAll(Arrays.asList(FlowerCard.recyclerViewStrings));
         insertDatabaseData();
         mMonk = getMonk();
+    }
+    @Override
+    public Handler getHandler(){
+        return MeditationActivity.handler;
     }
 
     @Override

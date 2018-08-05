@@ -1,5 +1,8 @@
 package com.paul.t29ideagarden2.biz;
 
+import android.os.Handler;
+import android.os.Message;
+
 import com.paul.t29ideagarden2.bean.Monk;
 
 /**
@@ -10,19 +13,24 @@ import com.paul.t29ideagarden2.bean.Monk;
 
 public class MonkMeditation implements IMonkMeditation {
     @Override
-    public void meditation(final Monk monk, final OnMeditationFinishedListener listener) {
+    public void meditation(final Monk monk, final OnMeditationFinishedListener listener, final Handler handler) {
         new Thread(){
             @Override
             public void run() {
                 super.run();
-                try{
-                    Thread.sleep(5000);//tt: now it's 5s
-                }catch (InterruptedException e){
-                    e.printStackTrace();
+                int counterDown = 60;//tt:now it's 1 min
+                for(;counterDown > 0;counterDown --){
+                    try{
+                        Message message = handler.obtainMessage(1);
+                        message.arg1 = counterDown;
+                        Thread.sleep(1000);
+                        handler.sendMessage(message);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
                 //tt: 顺利完成meditation
                 if (monk != null){
-                    monk.setDanCount(monk.getDanCount() + 1);
                     listener.meditationFinished();
                 }else{
                 //tt: 未正常完成
