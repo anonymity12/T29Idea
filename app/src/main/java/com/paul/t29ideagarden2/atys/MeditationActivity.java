@@ -44,12 +44,13 @@ import static com.paul.t29ideagarden2.util.Constants.ACTIVITY_REQUEST_FOR_CHANGE
  * last modified at 8:48 PM.
  * Desc:
  */
-
+// TODO: 2018/8/8 在数据库内保存完成的丹信息，以及对应的UI更新考虑 
 public class MeditationActivity extends AppCompatActivity implements IMonkMeditationView{
     private RecyclerView mRecyclerView;
     private ImageView headImg;
-    private FloatingActionButton fab;
+    private TextView tv_dan_count;
     private ProgressBar mProgressBar;
+    private FloatingActionButton fab;
     private List<String> mDatas;
     private HomeAdapter mAdapter;
     private Monk mMonk;
@@ -80,6 +81,8 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
     }
 
     void initViews(){
+        tv_dan_count = findViewById(R.id.dan_count);
+        tv_dan_count.setText(mMonk.getDanCount()+"");
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,1));
         mRecyclerView.setAdapter(mAdapter = new HomeAdapter());
@@ -146,8 +149,10 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
             monk.setLevel(level);
             monk.setImgPath(monk_img_path);
             monk.setName(name);
+            cursor.close();
             return monk;
         }
+        cursor.close();
         return null;
     }
 
@@ -162,12 +167,14 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         Cursor cursor = db.query("Monk",null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             int danCount = cursor.getInt(cursor.getColumnIndex("monk_dan_count"));
-            mMonk.setDanCount(danCount);
+            mMonk.setDanCount(danCount+1);
         }
         ContentValues cv = new ContentValues();
-        cv.put("monk_dan_count",mMonk.getDanCount()+1);
+        cv.put("monk_dan_count",mMonk.getDanCount());
         db.update("Monk",cv,"monk_name = ?",new String[]{mMonk.getName()});
-        Toast.makeText(this, "顺利完成本次修行,丹数量："+(mMonk.getDanCount()+1), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "顺利完成本次修行,丹数量："+(mMonk.getDanCount()), Toast.LENGTH_SHORT).show();
+        tv_dan_count.setText(mMonk.getDanCount()+"");
+        cursor.close();
     }
 
     public void interruptMeditation(){
@@ -187,6 +194,7 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
             cv.put("monk_dan_count", 34);
             db.insert("Monk", null, cv);
         }
+        cursor.close();
 
     }
 
@@ -205,7 +213,8 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
             Toast.makeText(this,"find Img at" + picturePath,Toast.LENGTH_SHORT).show();
             ContentValues cv = new ContentValues();
             cv.put("monk_img_path",picturePath);
-            db.update("Monk",cv,"monk_name = ?",new String[]{"Paul"});
+            db.update("Monk",cv,"monk_name = ?",new String[]{mMonk.getName()});//tt: we use getMonk().getName() later.
+            headImg.setImageBitmap(getUserProfile(mMonk.getImgPath()));
         }
     }
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WaveProgress">
+        <attr name="antiAlias" format="boolean"/>
+        <attr name="startAngle" format="float"/>
+        <attr name="sweepAngle" format="float" />
+        <attr name="darkWaveAnimTime" format="integer" />
+        <attr name="lightWaveAnimTime" format="integer" />
+        <attr name="maxValue" format="float" />
+        <attr name="value" format="float" />
+        <attr name="valueColor" format="color|reference" />
+        <attr name="valueSize" format="dimension" />
+        <attr name="hint" format="string|reference" />
+        <attr name="hintSize" format="dimension" />
+        <attr name="hintColor" format="color|reference" />
+        <attr name="circleWidth" format="dimension" />
+        <attr name="circleColor" format="color|reference" />
+        <attr name="bgCircleColor" format="color|reference" />
+        <attr name="lockWave" format="boolean" />
+        <attr name="waveNum" format="integer" />
+        <attr name="waveHeight" format="dimension" />
+        <attr name="darkWaveColor" format="color|reference" />
+        <attr name="lightWaveColor" format="color|reference" />
+        <attr name="showLightWave" format="boolean" />
+        <attr name="lightWaveDirect" format="enum">
+            <enum name="L2R" value="0" />
+            <enum name="R2L" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

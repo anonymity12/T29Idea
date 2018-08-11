@@ -14,6 +14,8 @@ public class Constants {
     public static final int ACTIVITY_REQUEST_FOR_SETTING_CODE = 322;
     public static final int ACTIVITY_REQUEST_FOR_REGISTER_USER = 323;
     public static final int ACTIVITY_REQUEST_FOR_CHANGE_USER_IMG = 324;
+    public static final int DEFAULT_SIZE = 150;
+
 
     public static String img_path = "";
     public static final String CREATE_MONK_TABLE = "create table Monk("

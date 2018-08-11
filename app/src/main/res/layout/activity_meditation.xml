@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
         app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
         app:layout_constraintStart_toStartOf="@+id/floatingActionButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
     <ImageView
         android:id="@+id/user_profile"
@@ -34,19 +34,19 @@
         app:srcCompat="@drawable/ic_buddhist_monk" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="MOnkPaul"
+        android:text="Paul"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/user_profile"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -59,14 +59,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_dan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Dan:"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_level"
+        app:layout_constraintStart_toStartOf="@+id/tv_level"
+        app:layout_constraintTop_toBottomOf="@+id/tv_level" />
+
+        <TextView
+        android:id="@+id/dan_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="how_many_dan_got"
+        android:text="34"
+        android:textAppearance="@style/TextAppearance.Design.Counter"
+        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toEndOf="@+id/tv_dan"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_dan"
+        tools:layout_editor_absoluteY="70dp"
+        tools:text="55" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -91,4 +106,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/recyclerView"
         app:srcCompat="@drawable/ic_icons8_meditation_gu" />
+
+
 </android.support.constraint.ConstraintLayout>
