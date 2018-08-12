@@ -15,6 +15,14 @@ public class Constants {
     public static final int ACTIVITY_REQUEST_FOR_REGISTER_USER = 323;
     public static final int ACTIVITY_REQUEST_FOR_CHANGE_USER_IMG = 324;
     public static final int DEFAULT_SIZE = 150;
+    public static final int DEFAULT_ANIM_TIME = 1000;
+    public static final int DEFAULT_VALUE_SIZE = 15;
+    public static final int DEFAULT_HINT_SIZE = 15;
+    public static final int DEFAULT_UNIT_SIZE = 30;
+    public static final int DEFAULT_ARC_WIDTH = 15;
+    public static final int DEFAULT_WAVE_HEIGHT = 40;
+
+
 
 
     public static String img_path = "";
