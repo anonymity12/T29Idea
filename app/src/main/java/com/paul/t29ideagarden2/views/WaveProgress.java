@@ -116,7 +116,7 @@ public class WaveProgress extends View {
         mCircleColor = typedArray.getColor(R.styleable.WaveProgress_circleColor, Color.GREEN);
         mBgCircleColor = typedArray.getColor(R.styleable.WaveProgress_bgCircleColor, Color.GRAY);
 
-        mWaveHeight = typedArray.getInt(R.styleable.WaveProgress_waveHeight, Constants.DEFAULT_WAVE_HEIGHT);
+        mWaveHeight = typedArray.getDimension(R.styleable.WaveProgress_waveHeight, Constants.DEFAULT_WAVE_HEIGHT);
         mWaveNum = typedArray.getInt(R.styleable.WaveProgress_waveNum, 4);
 
         mDarkWaveColor = typedArray.getColor(R.styleable.WaveProgress_darkWaveColor, getResources().getColor(android.R.color.holo_blue_dark));
@@ -192,12 +192,12 @@ public class WaveProgress extends View {
         Point [] points = new Point[mAllPointCount];
         points[mHalfPointCount] = new Point((int)(mCenterPoint.x + (isR2L?mRadius:-mRadius)), mCenterPoint.y);
         /*在球内的波浪点*/
-        for (int i = mHalfPointCount; i < mAllPointCount; i ++){
+        for (int i = mHalfPointCount + 1; i < mAllPointCount; i += 4){
             float xAnchor =points[mHalfPointCount].x + (i / 4 - mWaveNum) * waveWidth;
-            points[i + 1] = new Point((int) (waveWidth * 1 / 4 + xAnchor), (int) (mCenterPoint.y - mWaveHeight));
-            points[i + 2] = new Point((int) (waveWidth * 2 / 4 + xAnchor), (int) (mCenterPoint.y));
-            points[i + 3] = new Point((int) (waveWidth * 3 / 4 + xAnchor), (int) (mCenterPoint.y + mWaveHeight));
-            points[i + 4] = new Point((int) (waveWidth * 4 / 4 + xAnchor), (int) (mCenterPoint.y));
+            points[i + 0] = new Point((int) (waveWidth * 1 / 4 + xAnchor), (int) (mCenterPoint.y - mWaveHeight));
+            points[i + 1] = new Point((int) (waveWidth * 2 / 4 + xAnchor), (int) (mCenterPoint.y));
+            points[i + 2] = new Point((int) (waveWidth * 3 / 4 + xAnchor), (int) (mCenterPoint.y + mWaveHeight));
+            points[i + 3] = new Point((int) (waveWidth * 4 / 4 + xAnchor), (int) (mCenterPoint.y));
         }
         /*在球外的波澜点*/
         for(int i = 0; i < mHalfPointCount; i ++){
@@ -342,7 +342,7 @@ public class WaveProgress extends View {
         }
         if (mLightWaveAnimator != null && mLightWaveAnimator.isRunning()) {
             mLightWaveAnimator.cancel();
-            mDarkWaveAnimator.removeAllUpdateListeners();
+            mLightWaveAnimator.removeAllUpdateListeners();
             mLightWaveAnimator = null;
         }
     }

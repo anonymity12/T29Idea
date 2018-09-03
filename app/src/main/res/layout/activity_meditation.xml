@@ -26,7 +26,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/ll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.02"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,14 +83,31 @@
         tools:layout_editor_absoluteY="70dp"
         tools:text="55" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <LinearLayout
+        android:id="@+id/ll"
+        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_profile" />
+        app:layout_constraintTop_toBottomOf="@+id/user_profile" >
+
+        <com.paul.t29ideagarden2.views.WaveProgress
+            android:id="@+id/wave_progress_bar"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            app:darkWaveAnimTime="1000"
+            app:darkWaveColor="@color/black"
+            app:lightWaveAnimTime="2000"
+            app:lightWaveColor="@color/white"
+            app:lightWaveDirect="R2L"
+            app:lockWave="false"
+            app:valueSize="30sp"
+            app:waveHeight="31dp"
+            app:waveNum="1" />
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -100,11 +117,11 @@
         android:layout_marginStart="8dp"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/ll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.89"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recyclerView"
+        app:layout_constraintTop_toTopOf="@+id/ll"
         app:srcCompat="@drawable/ic_icons8_meditation_gu" />
 
 

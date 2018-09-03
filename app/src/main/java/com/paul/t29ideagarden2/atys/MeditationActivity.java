@@ -52,7 +52,6 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
     private ProgressBar mProgressBar;
     private FloatingActionButton fab;
     private List<String> mDatas;
-    private HomeAdapter mAdapter;
     private Monk mMonk;
     private MonkDatabaseHelper monkDatabaseHelper;
     private MeditationPresenter meditationPresenter = new MeditationPresenter(this);
@@ -63,12 +62,9 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meditation);
-        
 
         initData();
         initViews();
-
-
     }
 
     protected void initData()
@@ -83,9 +79,6 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
     void initViews(){
         tv_dan_count = findViewById(R.id.dan_count);
         tv_dan_count.setText(mMonk.getDanCount()+"");
-        mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,1));
-        mRecyclerView.setAdapter(mAdapter = new HomeAdapter());
         headImg = findViewById(R.id.user_profile);
         if (getUserProfile(mMonk.getImgPath())!= null){
             headImg.setImageBitmap(getUserProfile(mMonk.getImgPath()));
@@ -215,43 +208,6 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
             cv.put("monk_img_path",picturePath);
             db.update("Monk",cv,"monk_name = ?",new String[]{mMonk.getName()});//tt: we use getMonk().getName() later.
             headImg.setImageBitmap(getUserProfile(mMonk.getImgPath()));
-        }
-    }
-
-    class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
-    {
-
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
-            MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                    MeditationActivity.this).inflate(R.layout.item_home, parent,
-                    false));
-            return holder;
-        }
-
-        @Override
-        public void onBindViewHolder(MyViewHolder holder, int position)
-        {
-            holder.tv.setText(mDatas.get(position));
-        }
-
-        @Override
-        public int getItemCount()
-        {
-            return mDatas.size();
-        }
-
-        class MyViewHolder extends ViewHolder
-        {
-
-            TextView tv;
-
-            public MyViewHolder(View view)
-            {
-                super(view);
-                tv = (TextView) view.findViewById(R.id.id_num);
-            }
         }
     }
 
