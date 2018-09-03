@@ -12,7 +12,7 @@ import android.view.View;
 
 public class ViewUtil {
     public static int measure(int measureSpec, int defaultSize) {
-        //defaultSize 实际上是我们人为在代码里定义的保障性大小限制，它（一定）不是xml里的那个指定尺寸
+        //defaultSize 实际上是我们人为在代码里定义的保障性大小限制，它（一定）不是xml里的那个指定尺寸.实际上他是在Constant里定义的一个常量
         int result = defaultSize;
         int specMode = View.MeasureSpec.getMode(measureSpec);
         int specSize = View.MeasureSpec.getSize(measureSpec);
