@@ -36,6 +36,7 @@ import com.paul.t29ideagarden2.bean.Monk;
 import com.paul.t29ideagarden2.helper.MonkDatabaseHelper;
 import com.paul.t29ideagarden2.presenter.MeditationPresenter;
 import com.paul.t29ideagarden2.view.IMonkMeditationView;
+import com.paul.t29ideagarden2.views.WaveProgress;
 
 import static com.paul.t29ideagarden2.util.Constants.ACTIVITY_REQUEST_FOR_CHANGE_USER_IMG;
 
@@ -47,6 +48,7 @@ import static com.paul.t29ideagarden2.util.Constants.ACTIVITY_REQUEST_FOR_CHANGE
 // TODO: 2018/8/8 在数据库内保存完成的丹信息，以及对应的UI更新考虑 
 public class MeditationActivity extends AppCompatActivity implements IMonkMeditationView{
     private RecyclerView mRecyclerView;
+    private WaveProgress mWaveProgress;
     private ImageView headImg;
     private TextView tv_dan_count;
     private ProgressBar mProgressBar;
@@ -92,6 +94,7 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
             }
         });
         mProgressBar = findViewById(R.id.progressBar);
+        mWaveProgress = findViewById(R.id.wave_progress_bar);
         fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +109,7 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
                 switch (msg.what){
                     case 1:
                         mProgressBar.setProgress((int)(100 - ((msg.arg1 / 60.0) * 100)));//tt: now we use 1 min, so 60
+                        mWaveProgress.setValue((int)(100 - ((msg.arg1 / 60.0) * 100)));
                         break;
                     default:
                         Toast.makeText(getBaseContext(),"handle error",Toast.LENGTH_SHORT).show();
