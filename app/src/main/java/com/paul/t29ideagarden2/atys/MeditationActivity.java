@@ -39,6 +39,7 @@ import com.paul.t29ideagarden2.view.IMonkMeditationView;
 import com.paul.t29ideagarden2.views.WaveProgress;
 
 import static com.paul.t29ideagarden2.util.Constants.ACTIVITY_REQUEST_FOR_CHANGE_USER_IMG;
+import static com.paul.t29ideagarden2.util.Constants.TIME_UP_LIMIT;
 
 /**
  * Created by paul on 2018/6/22
@@ -108,8 +109,8 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 1:
-                        mProgressBar.setProgress((int)(100 - ((msg.arg1 / 60.0) * 100)));//tt: now we use 1 min, so 60
-                        mWaveProgress.setValue((int)(100 - ((msg.arg1 / 60.0) * 100)));
+                        mProgressBar.setProgress((int)(100 - ((msg.arg1 / TIME_UP_LIMIT * 1f) * 100)));//tt: now we use 1 min, so 60
+                        mWaveProgress.setValue((int)(100 - ((msg.arg1 / TIME_UP_LIMIT * 1f) * 100)));
                         break;
                     default:
                         Toast.makeText(getBaseContext(),"handle error",Toast.LENGTH_SHORT).show();

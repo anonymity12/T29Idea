@@ -5,6 +5,8 @@ import android.os.Message;
 
 import com.paul.t29ideagarden2.bean.Monk;
 
+import static com.paul.t29ideagarden2.util.Constants.TIME_UP_LIMIT;
+
 /**
  * Created by paul on 2018/6/23
  * last modified at 3:53 PM.
@@ -18,7 +20,7 @@ public class MonkMeditation implements IMonkMeditation {
             @Override
             public void run() {
                 super.run();
-                int counterDown = 60;//tt:now it's 1 min
+                int counterDown = TIME_UP_LIMIT;//tt:now it's 10 min
                 for(;counterDown > 0;counterDown --){
                     try{
                         Message message = handler.obtainMessage(1);

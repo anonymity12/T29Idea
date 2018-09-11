@@ -274,7 +274,7 @@ public class WaveProgress extends View {
         }
         // complete: 2018/8/28 翌日早起
         if (mPrePercent == 0.0f || Math.abs(mPercent - mPrePercent) >= 0.01f) {
-            mPercentValue = String.format(".0f%%", mPercent * 100);
+            mPercentValue = String.format("%.0f%%", mPercent * 100);
             mPrePercent = mPercent;
         }
         canvas.drawText(mPercentValue, mCenterPoint.x, y, mPercentPaint);
