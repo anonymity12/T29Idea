@@ -1,8 +1,15 @@
+# 0911 更新，你TMD还是能多次点击，这个SB bug快点解决
+
+
+<img src="http://o6qns6y6x.bkt.clouddn.com/18-9-11/39725696.jpg" width = "431" height = "631" alt="该死的不同步" align=center />
+
+
 # 20180903更新，添加水波计时view
 
 效果如图
 
-![](http://o6qns6y6x.bkt.clouddn.com/18-9-3/17724073.jpg)
+
+<img src="http://o6qns6y6x.bkt.clouddn.com/18-9-3/17724073.jpg" width = "431" height = "631" alt="该死的不同步" align=center />
 
 
 # 20171020更新，说明一下完整方案和下载地址
