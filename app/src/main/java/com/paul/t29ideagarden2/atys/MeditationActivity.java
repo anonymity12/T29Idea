@@ -109,8 +109,8 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 1:
-                        mProgressBar.setProgress((int)(100 - ((msg.arg1 / TIME_UP_LIMIT * 1f) * 100)));//tt: now we use 1 min, so 60
-                        mWaveProgress.setValue((int)(100 - ((msg.arg1 / TIME_UP_LIMIT * 1f) * 100)));
+                        mProgressBar.setProgress((int)(100 - ((msg.arg1 / (TIME_UP_LIMIT * 1f)) * 100)));//tt: now we use 1 min, so 60
+                        mWaveProgress.setValue((int)(100 - ((msg.arg1 / (TIME_UP_LIMIT * 1f)) * 100)));
                         break;
                     default:
                         Toast.makeText(getBaseContext(),"handle error",Toast.LENGTH_SHORT).show();

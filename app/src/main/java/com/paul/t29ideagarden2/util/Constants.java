@@ -21,7 +21,7 @@ public class Constants {
     public static final int DEFAULT_UNIT_SIZE = 30;
     public static final int DEFAULT_ARC_WIDTH = 15;
     public static final int DEFAULT_WAVE_HEIGHT = 40;
-    public static final int TIME_UP_LIMIT = 10 * 60;
+    public static final int TIME_UP_LIMIT = 10 * 60;//tt: 10 min will work for us!!
 
 
 
