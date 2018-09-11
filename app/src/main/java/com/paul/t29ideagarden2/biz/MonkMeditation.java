@@ -11,11 +11,12 @@ import static com.paul.t29ideagarden2.util.Constants.TIME_UP_LIMIT;
  * Created by paul on 2018/6/23
  * last modified at 3:53 PM.
  * Desc:
+ * todo: 如何禁止用户在当前有冥想过程时，继续点击，触发呢？synchronized
  */
 
 public class MonkMeditation implements IMonkMeditation {
     @Override
-    public void meditation(final Monk monk, final OnMeditationFinishedListener listener, final Handler handler) {
+    public synchronized void meditation(final Monk monk, final OnMeditationFinishedListener listener, final Handler handler) {
         new Thread(){
             @Override
             public void run() {

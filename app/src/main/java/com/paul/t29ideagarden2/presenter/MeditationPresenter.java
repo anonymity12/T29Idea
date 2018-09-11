@@ -29,6 +29,7 @@ public class MeditationPresenter {
         monkMeditation.meditation(monkMeditationView.getMonk(), new OnMeditationFinishedListener() {
             @Override
             public void meditationFinished() {
+                //tt: 如果这里直接调用：monkMeditationView.finishMeditation();会怎样？
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
