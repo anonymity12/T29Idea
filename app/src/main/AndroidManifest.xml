@@ -52,7 +52,8 @@
             android:label="这是一个思想花" />
         <activity android:name=".atys.HelpActivity"></activity>
         <activity android:name=".atys.MeditationActivity"
-            android:label="炼丹园">
+            android:label="炼丹园"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

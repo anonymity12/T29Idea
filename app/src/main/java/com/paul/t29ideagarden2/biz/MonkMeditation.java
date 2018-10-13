@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.paul.t29ideagarden2.bean.Monk;
 
+import static com.paul.t29ideagarden2.util.Constants.MSG_WHAT_UPDATE_TICK;
 import static com.paul.t29ideagarden2.util.Constants.TIME_UP_LIMIT;
 
 /**
@@ -38,11 +39,11 @@ public class MonkMeditation implements IMonkMeditation {
             synchronized (this) {
                 countingFlag = true;
                 //count down by for loop
-                int counterDown = TIME_UP_LIMIT;//tt:now it's 10 min
-                for(;counterDown > 0;counterDown--){
+                int counterDown = 0;//tt:now it's 0, grow up to 600 = 10 min
+                for(;counterDown <= TIME_UP_LIMIT;counterDown++){
                     try{
                         //send heart beat msg by for loop
-                        Message message = handler.obtainMessage(1);
+                        Message message = handler.obtainMessage(MSG_WHAT_UPDATE_TICK);
                         message.arg1 = counterDown;
                         Thread.sleep(1000);
                         handler.sendMessage(message);
