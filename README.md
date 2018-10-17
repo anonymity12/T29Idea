@@ -6,7 +6,7 @@
 # 0911 (solved! at 0922)更新，你TMD还是能多次点击，这个SB bug快点解决
 
 
-<img src="http://o6qns6y6x.bkt.clouddn.com/18-9-11/39725696.jpg" width = "431" height = "631" alt="该死的不同步" align=center />
+<img src="http://o6qns6y6x.bkt.clouddn.com/18-9-11/39725696.jpg" width = "431" height = "631" alt="descrip" align=center />
 
 
 # 20180903更新，添加水波计时view
@@ -14,12 +14,18 @@
 效果如图
 
 
-<img src="http://o6qns6y6x.bkt.clouddn.com/18-9-3/17724073.jpg" width = "431" height = "631" alt="该死的不同步" align=center />
+<img src="http://o6qns6y6x.bkt.clouddn.com/18-9-3/17724073.jpg" width = "431" height = "631" alt="descrip" align=center />
 
 
 # 20171020更新，说明一下完整方案和下载地址
 
-下载地址：https://pan.baidu.com/s/1ge5dIvT
+## 说明文档：
+
+https://blog.csdn.net/paulkg12/article/details/70231434
+
+## 下载地址：
+
+https://pan.baidu.com/s/12AvmCPje4kIjsQJb1brEfw
 
 ==这个App最终和最开始的目标都是==
 
