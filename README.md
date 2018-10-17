@@ -1,15 +1,15 @@
 
-# 1013(bug fix: 0922) commitId:1.22 解决的bug：1。 设备方向变更，导致aty重建；现在不重建了；2。 计时到98/99%就停；现在改为增量计时，0->600,且到600
+- 1013(bug fix: 0922) commitId:1.22 解决的bug：1。 设备方向变更，导致aty重建；现在不重建了；2。 计时到98/99%就停；现在改为增量计时，0->600,且到600
 
-# 0922(bug!) 现在不会让用户多次点击了，但发现bug：到99后一直打转
+- 0922(bug!) 现在不会让用户多次点击了，但发现bug：到99后一直打转
 
-# 0911 (solved! at 0922)更新，你TMD还是能多次点击，这个SB bug快点解决
+- 0911 (solved! at 0922)更新，你TMD还是能多次点击，这个SB bug快点解决
 
 
 <img src="http://o6qns6y6x.bkt.clouddn.com/18-9-11/39725696.jpg" width = "431" height = "631" alt="descrip" align=center />
 
 
-# 20180903更新，添加水波计时view
+- 20180903更新，添加水波计时view
 
 效果如图
 
@@ -17,7 +17,7 @@
 <img src="http://o6qns6y6x.bkt.clouddn.com/18-9-3/17724073.jpg" width = "431" height = "631" alt="descrip" align=center />
 
 
-# 20171020更新，说明一下完整方案和下载地址
+# 20181014更新，说明一下完整方案和下载地址
 
 ## 说明文档：
 
