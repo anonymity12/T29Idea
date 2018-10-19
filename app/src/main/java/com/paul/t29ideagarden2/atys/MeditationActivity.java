@@ -33,6 +33,7 @@ import com.paul.t29ideagarden2.MainActivity;
 import com.paul.t29ideagarden2.R;
 import com.paul.t29ideagarden2.bean.FlowerCard;
 import com.paul.t29ideagarden2.bean.Monk;
+import com.paul.t29ideagarden2.fragment.CustomBottomSheetDialogFragment;
 import com.paul.t29ideagarden2.helper.MonkDatabaseHelper;
 import com.paul.t29ideagarden2.presenter.MeditationPresenter;
 import com.paul.t29ideagarden2.view.IMonkMeditationView;
@@ -157,12 +158,13 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
 
     @Override
     public void beginMeditation() {
-        Toast.makeText(this,"开始修行",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"静心时间开始",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void finishMeditation() {
-        SQLiteDatabase db = monkDatabaseHelper.getWritableDatabase();
+        new CustomBottomSheetDialogFragment().show(getSupportFragmentManager(), "Dialog");
+        /*SQLiteDatabase db = monkDatabaseHelper.getWritableDatabase();
         Cursor cursor = db.query("Monk",null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             int danCount = cursor.getInt(cursor.getColumnIndex("monk_dan_count"));
@@ -173,7 +175,7 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         db.update("Monk",cv,"monk_name = ?",new String[]{mMonk.getName()});
         Toast.makeText(this, "顺利完成本次修行,丹数量："+(mMonk.getDanCount()), Toast.LENGTH_SHORT).show();
         tv_dan_count.setText(mMonk.getDanCount()+"");
-        cursor.close();
+        cursor.close();*/
     }
 
     public void interruptMeditation(){
