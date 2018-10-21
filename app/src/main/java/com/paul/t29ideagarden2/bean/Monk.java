@@ -21,6 +21,7 @@ public class Monk {
         this.name = name;
     }
 
+    //todo(1021): del img path attribute
     public String getImgPath() {
         return imgPath;
     }

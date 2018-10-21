@@ -37,7 +37,19 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 finish_descrip = sub_et.getText().toString();
-                // TODO: 2018/10/19 插入到数据库，关联的monk下 
+                // TODO: 2018/10/19 插入到数据库，关联的monk下
+                /*SQLiteDatabase db = monkDatabaseHelper.getWritableDatabase();
+                Cursor cursor = db.query("Monk",null,null,null,null,null,null);
+                if (cursor.moveToFirst()){
+                    int danCount = cursor.getInt(cursor.getColumnIndex("monk_dan_count"));
+                    mMonk.setDanCount(danCount+1);
+                }
+                ContentValues cv = new ContentValues();
+                cv.put("monk_dan_count",mMonk.getDanCount());
+                db.update("Monk",cv,"monk_name = ?",new String[]{mMonk.getName()});
+                Toast.makeText(this, "顺利完成本次修行,丹数量："+(mMonk.getDanCount()), Toast.LENGTH_SHORT).show();
+                tv_dan_count.setText(mMonk.getDanCount()+"");
+                cursor.close();*/
             }
         });
     }

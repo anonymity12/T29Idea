@@ -9,7 +9,9 @@ import android.Manifest;
  */
 
 public class Constants {
-    public static final String[] permissions = {Manifest.permission.INTERNET,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION};
+    public static final String[] permissions = {Manifest.permission.INTERNET, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION};
+    public static final String SP_USER_IMG_PATH = "user_img_path";
+    public static final String SP_USER_IMG_PATH_KEY = "user_img_path_key";
     public static final int PERMISSION_REQUEST_CODE = 321;
     public static final int ACTIVITY_REQUEST_FOR_SETTING_CODE = 322;
     public static final int ACTIVITY_REQUEST_FOR_REGISTER_USER = 323;
@@ -28,9 +30,10 @@ public class Constants {
 
 
     public static String img_path = "";
-    public static final String CREATE_MONK_TABLE = "create table Monk("
+    public static final String CREATE_MONK_TABLE = "create table if not exists Dan("
             + "monk_name text,"
             + "monk_img_path text,"
             + "monk_level integer,"
             + "monk_dan_count integer)";
+
 }

@@ -2,6 +2,7 @@ package com.paul.t29ideagarden2.atys;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -41,12 +42,15 @@ import com.paul.t29ideagarden2.views.WaveProgress;
 
 import static com.paul.t29ideagarden2.util.Constants.ACTIVITY_REQUEST_FOR_CHANGE_USER_IMG;
 import static com.paul.t29ideagarden2.util.Constants.MSG_WHAT_UPDATE_TICK;
+import static com.paul.t29ideagarden2.util.Constants.SP_USER_IMG_PATH;
+import static com.paul.t29ideagarden2.util.Constants.SP_USER_IMG_PATH_KEY;
 import static com.paul.t29ideagarden2.util.Constants.TIME_UP_LIMIT;
 
 /**
  * Created by paul on 2018/6/22
  * last modified at 8:48 PM.
  * Desc:
+ * 2018-10-21 09:06:14 现在使用sharedPreference来保存图片的路径。
  */
 // TODO: 2018/8/8 在数据库内保存完成的丹信息，以及对应的UI更新考虑 
 public class MeditationActivity extends AppCompatActivity implements IMonkMeditationView{
@@ -82,11 +86,13 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
     }
 
     void initViews(){
+        SharedPreferences sp = getSharedPreferences(SP_USER_IMG_PATH,MODE_PRIVATE);
+        String imgPath = sp.getString("img_path",null);
         tv_dan_count = findViewById(R.id.dan_count);
         tv_dan_count.setText(mMonk.getDanCount()+"");
         headImg = findViewById(R.id.user_profile);
-        if (getUserProfile(mMonk.getImgPath())!= null){
-            headImg.setImageBitmap(getUserProfile(mMonk.getImgPath()));
+        if (getUserProfile(imgPath)!= null){
+            headImg.setImageBitmap(getUserProfile(imgPath));
         }
         headImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,11 +205,13 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
 
     }
 
+    //tt: 处理用户选择照片作为头像，aty返回时
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        SQLiteDatabase db = monkDatabaseHelper.getWritableDatabase();
+
         if(requestCode == ACTIVITY_REQUEST_FOR_CHANGE_USER_IMG && resultCode == RESULT_OK && data != null){
+            //天天：获得绝对路径的逻辑，不懂。开始
             Uri selectedImg = data.getData();
             String [] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(selectedImg,filePathColumn,null,null,null);
@@ -211,11 +219,12 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
+            //天天：获得绝对路径的逻辑，不懂。结束。下面存储到sp内
             Toast.makeText(this,"find Img at" + picturePath,Toast.LENGTH_SHORT).show();
-            ContentValues cv = new ContentValues();
-            cv.put("monk_img_path",picturePath);
-            db.update("Monk",cv,"monk_name = ?",new String[]{mMonk.getName()});//tt: we use getMonk().getName() later.
-            headImg.setImageBitmap(getUserProfile(mMonk.getImgPath()));
+            SharedPreferences sp = getSharedPreferences(SP_USER_IMG_PATH, MODE_PRIVATE);
+            //tt: apply() 在后台执行
+            sp.edit().putString(SP_USER_IMG_PATH_KEY, picturePath).apply();
+            headImg.setImageBitmap(getUserProfile(picturePath));
         }
     }
 
