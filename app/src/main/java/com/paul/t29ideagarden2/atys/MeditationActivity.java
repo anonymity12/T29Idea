@@ -37,6 +37,7 @@ import com.paul.t29ideagarden2.bean.Monk;
 import com.paul.t29ideagarden2.fragment.CustomBottomSheetDialogFragment;
 import com.paul.t29ideagarden2.helper.MonkDatabaseHelper;
 import com.paul.t29ideagarden2.presenter.MeditationPresenter;
+import com.paul.t29ideagarden2.util.DBUtil;
 import com.paul.t29ideagarden2.view.IMonkMeditationView;
 import com.paul.t29ideagarden2.views.WaveProgress;
 
@@ -52,7 +53,8 @@ import static com.paul.t29ideagarden2.util.Constants.TIME_UP_LIMIT;
  * Desc:
  * 2018-10-21 09:06:14 现在使用sharedPreference来保存图片的路径。
  */
-// TODO: 2018/8/8 在数据库内保存完成的丹信息，以及对应的UI更新考虑 
+// TODO: 2018/8/8 在数据库内保存完成的丹信息，以及对应的UI更新考虑
+// TODO: 2018/10/21 让用户自定义名字，by sharedPreference
 public class MeditationActivity extends AppCompatActivity implements IMonkMeditationView{
     private RecyclerView mRecyclerView;
     private WaveProgress mWaveProgress;
@@ -62,7 +64,6 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
     private FloatingActionButton fab;
     private List<String> mDatas;
     private Monk mMonk;
-    private MonkDatabaseHelper monkDatabaseHelper;
     private MeditationPresenter meditationPresenter = new MeditationPresenter(this);
     static Handler handler;
 
@@ -78,7 +79,6 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
 
     protected void initData()
     {
-        monkDatabaseHelper = new MonkDatabaseHelper(this,"MonkRecord.db",null,1);
         mDatas = new ArrayList<String>();
         mDatas.addAll(Arrays.asList(FlowerCard.recyclerViewStrings));
         insertDatabaseData();
@@ -127,24 +127,17 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         };
     }
 
-    Bitmap getUserProfile(String filePath){
-        Bitmap userProfile = BitmapFactory.decodeFile(filePath);
-        if (userProfile != null){
-            return userProfile;
-        }else {
-            return null;
-        }
 
-    }
     @Override
     public Handler getHandler(){
         return MeditationActivity.handler;
     }
 
+    //tt ： todo 考虑 我们不再通过数据库获取 monk信息了，希望是通过sharedPreference
     @Override
     public Monk getMonk() {
         Monk monk = new Monk();
-        SQLiteDatabase db = monkDatabaseHelper.getWritableDatabase();
+        SQLiteDatabase db = DBUtil.getDatabase();
         Cursor cursor = db.query("Monk",null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             String name = cursor.getString(cursor.getColumnIndex("monk_name"));
@@ -184,13 +177,14 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         cursor.close();*/
     }
 
+    @Override
     public void interruptMeditation(){
         Toast.makeText(this, "未完成本次修行", Toast.LENGTH_SHORT).show();
     }
 
 
     private void insertDatabaseData(){
-        SQLiteDatabase db = monkDatabaseHelper.getWritableDatabase();
+        SQLiteDatabase db = DBUtil.getDatabase();
         Cursor cursor = db.query("Monk",null,null,null,null,null,null);
         //tt: only find no result, we execute db.insert();
         if (!cursor.moveToFirst()) {
@@ -226,6 +220,16 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
             sp.edit().putString(SP_USER_IMG_PATH_KEY, picturePath).apply();
             headImg.setImageBitmap(getUserProfile(picturePath));
         }
+    }
+    //便利方法：返回Bitmap
+    Bitmap getUserProfile(String filePath){
+        Bitmap userProfile = BitmapFactory.decodeFile(filePath);
+        if (userProfile != null){
+            return userProfile;
+        }else {
+            return null;
+        }
+
     }
 
 }

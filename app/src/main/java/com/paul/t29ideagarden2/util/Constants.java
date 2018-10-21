@@ -29,11 +29,12 @@ public class Constants {
 
 
 
-    public static String img_path = "";
+    public static String img_path = "";//tt？？del？
     public static final String CREATE_MONK_TABLE = "create table if not exists Dan("
             + "monk_name text,"
-            + "monk_img_path text,"
-            + "monk_level integer,"
-            + "monk_dan_count integer)";
+            + "type integer,"
+            + "desc text,"
+            + "img_addon text,"
+            + "time integer)";
 
 }
