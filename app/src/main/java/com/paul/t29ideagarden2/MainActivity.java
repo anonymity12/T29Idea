@@ -140,15 +140,7 @@ public class MainActivity extends AppCompatActivity
             TextView nav_user = (TextView) hView.findViewById(R.id.user_name);
             nav_user.setText(user.getUsername());
             userImage = hView.findViewById(R.id.user_image);
-            userImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intentForImg = new Intent();
-                    intentForImg.setType("image/*");
-                    intentForImg.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(intentForImg,ACTIVITY_REQUEST_FOR_CHANGE_USER_IMG);
-                }
-            });
+
             // 设置定位监听
             aMap.setLocationSource(this);
             aMap.setMyLocationEnabled(true);
@@ -178,7 +170,6 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
         mMapView.onResume();
-        setUserImage();
         findNear();
     }
 
@@ -342,31 +333,10 @@ public class MainActivity extends AppCompatActivity
                 }
 
             }
-        }else if(requestCode == ACTIVITY_REQUEST_FOR_CHANGE_USER_IMG){
-            if (resultCode == RESULT_OK){
-                Uri uri = data.getData();
-                String img_path = uri.toString();
-                SharedPreferences sp = getSharedPreferences("my_shared_preference", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("user_image",img_path);
-                editor.commit();//tt: recommend to use editor.apply() who work background.
-                setUserImage();
-            }
         }
 
     }
-    private void setUserImage(){
-        SharedPreferences sp = getSharedPreferences("my_shared_preference",Context.MODE_PRIVATE);
-        String img_path = sp.getString("user_image",null);
-        if (img_path != null){
-            Uri uri = Uri.parse(img_path);
-            try{
-                userImage.setImageURI(uri);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-    }
+
     public void editUserInfo(View view) {
         /*获取当前用户*/
         BmobUser user = User.getCurrentUser();
