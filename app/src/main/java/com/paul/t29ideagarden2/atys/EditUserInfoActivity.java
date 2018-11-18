@@ -124,7 +124,7 @@ public class EditUserInfoActivity extends Activity {
         userinfo_topbar = (ImageView) findViewById(R.id.userinfo_topbar);
 //获得像素密度
         scale = this.getResources().getDisplayMetrics().density;
-        mainheadview = (LinearLayout) findViewById(R.id.mainheadview);
+        mainheadview = (LinearLayout) findViewById(R.id.mainheadview);//mainHeaderView 是最头部的大图片
         mainactionbar = (RelativeLayout) findViewById(R.id.mainactionbar);
         menubarHeight = (int) (55 * scale);
         chufaHeight = (int) (110 * scale);
@@ -137,22 +137,15 @@ public class EditUserInfoActivity extends Activity {
             Log.d("EditUserActivity", ">>>>>>>>>>>>temp Shared Idea Count is :" + myStatics.getIdeaSharedCount());
             userIdeaCount.setText(string);
             userGoodIdeaCount.setText(stringGoodIdeaCount);
-
-
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        //// TODO: 4/14/17 补充点击回调事件，仿照T25RecyclerView的
+        //// deprecated: 4/14/17 补充点击回调事件，仿照T25RecyclerView的
 
 
         myscrollLinearlayout = (LinearLayout) findViewById(R.id.myscrollLinearlayout);
-        myscrollLinearlayout.setY( scrollviewdistancetotop); //要减去Absolote布局距离顶部的高度
-        myscrollLinearlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+        myscrollLinearlayout.setY(scrollviewdistancetotop); //要减去Absolote布局距离顶部的高度
         myscrollLinearlayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -164,7 +157,7 @@ public class EditUserInfoActivity extends Activity {
                     case MotionEvent.ACTION_MOVE:
                         int nowY = (int) myscrollLinearlayout.getY(); //拖动界面的Y轴位置
                         int tempY = (int) (event.getRawY() - Y); //手移动的偏移量
-                        Y = (int) event.getRawY();
+                        Y = (int) event.getRawY();//新的Y值
                         if ((nowY + tempY >= 0) && (nowY + tempY <= scrollviewdistancetotop)) {
                             if ((nowY + tempY <= menubarHeight)&& (topmenuflag == true) ){
                                 userinfo_topbar.setVisibility(View.VISIBLE);
@@ -178,14 +171,15 @@ public class EditUserInfoActivity extends Activity {
                             int headviewtemp = headViewPosition += (tempY/5);
                             mainheadview.setY(headviewtemp);
                         }
-//顶部的动画效果
+                        //顶部的动画效果，首先应对：往上滑，从不透明到透明
                         if ((myscrollLinearlayout.getY() <= chufaHeight) && (flag == true)) {
-                            ObjectAnimator anim = ObjectAnimator.ofFloat(mainheadview, "alpha", 1, 0.0f);
+                            ObjectAnimator anim = ObjectAnimator.ofFloat(mainheadview, "alpha", 1, 0.0f);//从不透明到透明
                             anim.setDuration(500);
                             anim.start();
                             flag = false;
+                        //以下是应对：往下滑， 从透明到不透明
                         } else if ((myscrollLinearlayout.getY() > chufaHeight + 40) && (flag == false)) {
-                            ObjectAnimator anim = ObjectAnimator.ofFloat(mainheadview, "alpha", 0.0f, 1f);
+                            ObjectAnimator anim = ObjectAnimator.ofFloat(mainheadview, "alpha", 0.0f, 1f);//从透明到不透明
                             anim.setDuration(500);
                             anim.start();
                             flag = true;

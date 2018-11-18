@@ -1,4 +1,7 @@
 
+
+- 1029 考虑学习 升级 editUserInfoAty, 滑动的imageview里放用户圆形头像类似qq空间
+
 - 1026 改回原来的启动界面，下一步fix头像问题。考虑bomb上传一次头像
 
 <img src="https://ws1.sinaimg.cn/large/005JrW9Kgy1fwn50e9b5rj30oy176jxy.jpg" width = "200" height = "350" alt="myFuzhouGarden" align=left />
