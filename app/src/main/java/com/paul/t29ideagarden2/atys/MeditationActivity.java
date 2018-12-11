@@ -1,6 +1,7 @@
 package com.paul.t29ideagarden2.atys;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +41,7 @@ import com.paul.t29ideagarden2.fragment.CustomBottomSheetDialogFragment;
 import com.paul.t29ideagarden2.helper.MonkDatabaseHelper;
 import com.paul.t29ideagarden2.presenter.MeditationPresenter;
 import com.paul.t29ideagarden2.util.DBUtil;
+import com.paul.t29ideagarden2.util.NotificationUtil;
 import com.paul.t29ideagarden2.view.IMonkMeditationView;
 import com.paul.t29ideagarden2.views.WaveProgress;
 
@@ -46,6 +50,7 @@ import static com.paul.t29ideagarden2.util.Constants.MSG_WHAT_UPDATE_TICK;
 import static com.paul.t29ideagarden2.util.Constants.SP_USER_IMG_PATH;
 import static com.paul.t29ideagarden2.util.Constants.SP_USER_IMG_PATH_KEY;
 import static com.paul.t29ideagarden2.util.Constants.TIME_UP_LIMIT;
+import static com.paul.t29ideagarden2.util.DBUtil.dbName;
 
 /**
  * Created by paul on 2018/6/22
@@ -56,6 +61,7 @@ import static com.paul.t29ideagarden2.util.Constants.TIME_UP_LIMIT;
 // TODO: 2018/8/8 在数据库内保存完成的丹信息，以及对应的UI更新考虑
 // TODO: 2018/10/21 让用户自定义名字，by sharedPreference
 public class MeditationActivity extends AppCompatActivity implements IMonkMeditationView{
+    private static final String TAG = "tt1";
     private RecyclerView mRecyclerView;
     private WaveProgress mWaveProgress;
     private ImageView headImg;
@@ -66,12 +72,15 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
     private Monk mMonk;
     private MeditationPresenter meditationPresenter = new MeditationPresenter(this);
     static Handler handler;
+    private NotificationUtil notificationUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meditation);
+        initDatabase();
+        Log.e(TAG, "onCreate: database done");
 
         initData();
         initViews();
@@ -119,6 +128,7 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
                     case MSG_WHAT_UPDATE_TICK:
                         mProgressBar.setProgress((int)(((msg.arg1 / (TIME_UP_LIMIT * 1f)) * 100)));//tt: now we use 10 min, so 600
                         mWaveProgress.setValue((int)(((msg.arg1 / (TIME_UP_LIMIT * 1f)) * 100)));
+                        notificationUtil.updateProgress(100, (int)(((msg.arg1 / (TIME_UP_LIMIT * 1f)) * 100)));
                         break;
                     default:
                         Toast.makeText(getBaseContext(),"handle error",Toast.LENGTH_SHORT).show();
@@ -137,7 +147,7 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
     @Override
     public Monk getMonk() {
         Monk monk = new Monk();
-        SQLiteDatabase db = DBUtil.getDatabase();
+        SQLiteDatabase db = new DBUtil().getDatabase(this);
         Cursor cursor = db.query("Monk",null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             String name = cursor.getString(cursor.getColumnIndex("monk_name"));
@@ -158,12 +168,15 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
     @Override
     public void beginMeditation() {
         Toast.makeText(this,"静心时间开始",Toast.LENGTH_SHORT).show();
+        notificationUtil = new NotificationUtil(this);
+        notificationUtil.showNotification(100);
     }
 
     @Override
     public void finishMeditation() {
         new CustomBottomSheetDialogFragment().show(getSupportFragmentManager(), "Dialog");
-        /*SQLiteDatabase db = monkDatabaseHelper.getWritableDatabase();
+        notificationUtil.cancel(100);
+        SQLiteDatabase db = new DBUtil().getDatabase(this);
         Cursor cursor = db.query("Monk",null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             int danCount = cursor.getInt(cursor.getColumnIndex("monk_dan_count"));
@@ -174,7 +187,7 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         db.update("Monk",cv,"monk_name = ?",new String[]{mMonk.getName()});
         Toast.makeText(this, "顺利完成本次修行,丹数量："+(mMonk.getDanCount()), Toast.LENGTH_SHORT).show();
         tv_dan_count.setText(mMonk.getDanCount()+"");
-        cursor.close();*/
+        cursor.close();
     }
 
     @Override
@@ -184,7 +197,11 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
 
 
     private void insertDatabaseData(){
-        SQLiteDatabase db = DBUtil.getDatabase();
+        SQLiteDatabase db = new DBUtil().getDatabase(this);
+        if(db == null) {
+            initDatabase();
+        }
+        Log.e(TAG, "insertDatabaseData: here db is" + db );
         Cursor cursor = db.query("Monk",null,null,null,null,null,null);
         //tt: only find no result, we execute db.insert();
         if (!cursor.moveToFirst()) {
@@ -196,6 +213,11 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
             db.insert("Monk", null, cv);
         }
         cursor.close();
+
+    }
+    void initDatabase() {
+        SQLiteDatabase db = new MonkDatabaseHelper(MeditationActivity.this, dbName, null, 1).getWritableDatabase();
+        Log.e(TAG, "at very fisrt: here db is" + db );
 
     }
 
@@ -231,6 +253,7 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         }
 
     }
+
 
 }
 

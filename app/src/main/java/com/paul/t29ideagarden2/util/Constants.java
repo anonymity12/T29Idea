@@ -23,18 +23,23 @@ public class Constants {
     public static final int DEFAULT_UNIT_SIZE = 30;
     public static final int DEFAULT_ARC_WIDTH = 15;
     public static final int DEFAULT_WAVE_HEIGHT = 40;
-    public static final int TIME_UP_LIMIT = (1 * 60);//tt: 10 min will work for us!!
+    public static final int TIME_UP_LIMIT = (25 * 60);//tt: 10 min will work for us!!
     public static final int MSG_WHAT_UPDATE_TICK = 1;
 
 
 
 
     public static String img_path = "";//tt？？del？
-    public static final String CREATE_MONK_TABLE = "create table if not exists Dan("
+    /*public static final String CREATE_MONK_TABLE = "create table if not exists Dan("
             + "monk_name text,"
             + "type integer,"
             + "desc text,"
             + "img_addon text,"
-            + "time integer)";
+            + "time integer)";*/
+    public static final String CREATE_MONK_TABLE = "create table Monk("
+            + "monk_name text,"
+            + "monk_img_path text,"
+            + "monk_level integer,"
+            + "monk_dan_count integer)";
 
 }
