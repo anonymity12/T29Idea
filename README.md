@@ -1,4 +1,10 @@
 
+
+- 1212 new feature! 添加通知能力
+
+<img src="/img/notiInboxStyleOk.jpg" width = "200" height = "350" alt="myFuzhouGarden" align=left />
+
+
 - 1013(bug fix: 0922) commitId:1.22 解决的bug：1。 设备方向变更，导致aty重建；现在不重建了；2。 计时到98/99%就停；现在改为增量计时，0->600,且到600
 
 - 0922(bug!) 现在不会让用户多次点击了，但发现bug：到99后一直打转
