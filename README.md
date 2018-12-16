@@ -1,7 +1,7 @@
 
 - 1216 通知多样能力 之大图片能力
 
-<img src="/img/bigPicStyle.jpg" width = "200" height = "250" alt="myFuzhouGarden" align=middle />
+<img src="/img/bigPicStyle.jpg" width = "200" height = "250" alt="myFuzhouGarden" align="middle" />
 
 
 - 1212 new feature! 添加通知能力
