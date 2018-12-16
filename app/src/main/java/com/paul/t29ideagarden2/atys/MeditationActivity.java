@@ -103,10 +103,10 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         String[] events = new String[]{"fucked", "static init", "your silly"};
         // Sets a title for the Inbox in expanded layout
-        inboxStyle.setBigContentTitle("Event tracker details:");
+        inboxStyle.setBigContentTitle("Event tracker details:");// tt 这个是下拉的时候取代 ContentTitle
         // Moves events into the expanded layout
         for (int i=0; i < events.length; i++) {
-            inboxStyle.addLine(events[i]);
+            inboxStyle.addLine(events[i]);//tt: addLine 的东西，在下拉的时候，取代原来 是Content Text 的部分
         }
         // Moves the expanded layout object into the notification object.
         mBuilder.setStyle(inboxStyle);
