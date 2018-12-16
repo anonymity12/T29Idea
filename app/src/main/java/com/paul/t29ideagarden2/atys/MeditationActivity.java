@@ -1,5 +1,6 @@
 package com.paul.t29ideagarden2.atys;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
@@ -89,12 +90,16 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         initData();
         initViews();
         notificate();
+        Log.e(TAG, "onCreate: all done");
+
     }
     private void notificate() {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.app_icon)
+                .setSmallIcon(R.drawable.ic_flower)
                 .setContentTitle("Event tracker")
-                .setContentText("Events received");
+                .setContentText("Events received")
+                .setVibrate(new long[]{1000, 500, 2000});//先震动1秒，然后停止0.5秒，再震动2秒则可设置数组为：long[]{1000, 500, 2000}
+        // tt 通知震动，参考： https://blog.csdn.net/androidzmm/article/details/80679804
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         String[] events = new String[]{"fucked", "static init", "your silly"};
         // Sets a title for the Inbox in expanded layout
@@ -108,8 +113,11 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         // tt： 这里才进行真正的通知
         NotificationManager mNotificationManager =
         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = mBuilder.build();
+        //tt: tdo 1216 这里不能震动，为啥呢;; 需要在builder 里设置震动的attr。builder.setVibrate(new long[]{1000, 500, 2000})
+        notification.flags = Notification.FLAG_INSISTENT;
         // mId allows you to update the notification later on.
-        mNotificationManager.notify(100, mBuilder.build());
+        mNotificationManager.notify(100, notification);
 
     }
 
