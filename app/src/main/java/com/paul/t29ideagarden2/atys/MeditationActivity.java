@@ -95,21 +95,15 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
     }
     private void notificate() {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_flower)
+                .setSmallIcon(R.drawable.ic_draw_flower)
                 .setContentTitle("Event tracker")
                 .setContentText("Events received")
                 .setVibrate(new long[]{1000, 500, 2000});//先震动1秒，然后停止0.5秒，再震动2秒则可设置数组为：long[]{1000, 500, 2000}
-        // tt 通知震动，参考： https://blog.csdn.net/androidzmm/article/details/80679804
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-        String[] events = new String[]{"fucked", "static init", "your silly"};
-        // Sets a title for the Inbox in expanded layout
-        inboxStyle.setBigContentTitle("Event tracker details:");// tt 这个是下拉的时候取代 ContentTitle
-        // Moves events into the expanded layout
-        for (int i=0; i < events.length; i++) {
-            inboxStyle.addLine(events[i]);//tt: addLine 的东西，在下拉的时候，取代原来 是Content Text 的部分
-        }
-        // Moves the expanded layout object into the notification object.
-        mBuilder.setStyle(inboxStyle);
+        android.support.v4.app.NotificationCompat.BigPictureStyle style = new android.support.v4.app.NotificationCompat.BigPictureStyle();
+        style.setBigContentTitle("BigContentTitle");
+        style.setSummaryText("SummaryText");
+        style.bigPicture(BitmapFactory.decodeResource(getResources(), R.drawable.ic_draw_flower));//tt :  需要这里是真正的图片才能decode，不能是svg导入后得到的xml
+        mBuilder.setStyle(style);
         // tt： 这里才进行真正的通知
         NotificationManager mNotificationManager =
         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
