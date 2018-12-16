@@ -94,26 +94,9 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
 
     }
     private void notificate() {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_draw_flower)
-                .setContentTitle("Event tracker")
-                .setContentText("Events received")
-                .setVibrate(new long[]{1000, 500, 2000});//先震动1秒，然后停止0.5秒，再震动2秒则可设置数组为：long[]{1000, 500, 2000}
-        android.support.v4.app.NotificationCompat.BigPictureStyle style = new android.support.v4.app.NotificationCompat.BigPictureStyle();
-        style.setBigContentTitle("BigContentTitle");
-        style.setSummaryText("SummaryText");
-        style.bigPicture(BitmapFactory.decodeResource(getResources(), R.drawable.ic_draw_flower));//tt :  需要这里是真正的图片才能decode，不能是svg导入后得到的xml
-        mBuilder.setStyle(style);
-        // tt： 这里才进行真正的通知
-        NotificationManager mNotificationManager =
-        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = mBuilder.build();
-        //tt: tdo 1216 这里不能震动，为啥呢;; 需要在builder 里设置震动的attr。builder.setVibrate(new long[]{1000, 500, 2000})
-        notification.flags = Notification.FLAG_INSISTENT;
-        // mId allows you to update the notification later on.
-        mNotificationManager.notify(100, notification);
-
+        new updateNotificationProgressThread().start();// tt: don't use run(), run() will let this newly created thread run in Main thread, plz do use start().!!!
     }
+
 
     protected void initData()
     {
@@ -282,6 +265,41 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         }
 
     }
+
+    private class updateNotificationProgressThread extends Thread {
+
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MeditationActivity.this)
+                .setLargeIcon(BitmapFactory.decodeResource(MeditationActivity.this.getResources(), R.drawable.ic_draw_flower))// tt 这个会显示在最右侧，看来和jelly bean 当时的不同了。当时在左侧
+                .setSmallIcon(R.drawable.app_icon)
+                .setContentTitle("Event tracker")
+                .setContentText("Events received")
+                .setVibrate(new long[]{1000, 500, 2000})
+                .setProgress(100, 0, false);//先震动1秒，然后停止0.5秒，再震动2秒则可设置数组为：long[]{1000, 500, 2000}
+        // tt： 这里才进行真正的通知
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        @Override
+        public void run() {
+            super.run();
+            for (int i = 0; i < 100; i ++) {
+                mBuilder.setProgress(100,i, false);//先震动1秒，然后停止0.5秒，再震动2秒则可设置数组为：long[]{1000, 500, 2000}
+                Notification notification = mBuilder.build();
+                notification.flags = Notification.FLAG_INSISTENT;
+                // mId allows you to update the notification later on.
+                mNotificationManager.notify(100, notification);
+                try {
+
+                    Thread.sleep(50);//演示休眠50毫秒
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 
 
 }
