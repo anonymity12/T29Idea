@@ -1,3 +1,6 @@
+- 1218 学习了，在前台的service 里开启通知
+
+<img src="/img/serviceNotifiOk.jpg" width = "150" height = "80" alt="myFuzhouGarden" align="middle" />
 
 - 1216 通知多样能力 之大图片能力
 

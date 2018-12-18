@@ -40,6 +40,7 @@ import android.widget.Toast;
 
 import com.paul.t29ideagarden2.MainActivity;
 import com.paul.t29ideagarden2.R;
+import com.paul.t29ideagarden2.background.MeditationService;
 import com.paul.t29ideagarden2.bean.FlowerCard;
 import com.paul.t29ideagarden2.bean.Monk;
 import com.paul.t29ideagarden2.fragment.CustomBottomSheetDialogFragment;
@@ -89,7 +90,7 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
 
         initData();
         initViews();
-        notificate();
+        //notificate();
         Log.e(TAG, "onCreate: all done");
 
     }
@@ -140,7 +141,6 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
                     case MSG_WHAT_UPDATE_TICK:
                         mProgressBar.setProgress((int)(((msg.arg1 / (TIME_UP_LIMIT * 1f)) * 100)));//tt: now we use 10 min, so 600
                         mWaveProgress.setValue((int)(((msg.arg1 / (TIME_UP_LIMIT * 1f)) * 100)));
-                        notificationUtil.updateProgress(100, (int)(((msg.arg1 / (TIME_UP_LIMIT * 1f)) * 100)));
                         break;
                     default:
                         Toast.makeText(getBaseContext(),"handle error",Toast.LENGTH_SHORT).show();
@@ -180,8 +180,8 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
     @Override
     public void beginMeditation() {
         Toast.makeText(this,"静心时间开始",Toast.LENGTH_SHORT).show();
-        notificationUtil = new NotificationUtil(this);
-        notificationUtil.showNotification(100);
+        Intent serviceIntent = new Intent(this, MeditationService.class);
+        startService(serviceIntent);
     }
 
     @Override
@@ -285,7 +285,7 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         public void run() {
             super.run();
             for (int i = 0; i < 100; i ++) {
-                mBuilder.setProgress(100,i, false);//先震动1秒，然后停止0.5秒，再震动2秒则可设置数组为：long[]{1000, 500, 2000}
+                mBuilder.setProgress(100,i, false);
                 Notification notification = mBuilder.build();
                 notification.flags = Notification.FLAG_INSISTENT;
                 // mId allows you to update the notification later on.
