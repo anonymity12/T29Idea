@@ -1,3 +1,8 @@
+- 1220 alarm manager
+
+<img src="/img/alarmOk.jpg" width = "500" height = "100" alt="myFuzhouGarden" align="middle" />
+
+
 - 1218 学习了，在前台的service 里开启通知
 
 <img src="/img/serviceNotifiOk.jpg" width = "150" height = "80" alt="myFuzhouGarden" align="middle" />
@@ -9,7 +14,7 @@
 
 - 1212 new feature! 添加通知能力
 
-<img src="/img/notiInboxStyleOk.jpg" width = "200" height = "350" alt="myFuzhouGarden" align=left />
+<img src="/img/notiInboxStyleOk.jpg" width = "200" height = "350" alt="myFuzhouGarden" align=middle />
 
 
 - 1013(bug fix: 0922) commitId:1.22 解决的bug：1。 设备方向变更，导致aty重建；现在不重建了；2。 计时到98/99%就停；现在改为增量计时，0->600,且到600

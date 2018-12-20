@@ -63,6 +63,7 @@
             </intent-filter>
         </activity>
         <service android:name=".background.MeditationService"/>
+        <receiver android:name=".background.AlarmReceiver"/>
     </application>
 
 </manifest>

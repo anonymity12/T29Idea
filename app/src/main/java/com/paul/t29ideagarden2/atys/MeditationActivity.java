@@ -98,7 +98,6 @@ public class MeditationActivity extends AppCompatActivity implements IMonkMedita
         new updateNotificationProgressThread().start();// tt: don't use run(), run() will let this newly created thread run in Main thread, plz do use start().!!!
     }
 
-
     protected void initData()
     {
         mDatas = new ArrayList<String>();
